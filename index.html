@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Gửi Công Chúa 2003</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: rotateScene 15s infinite linear;
+        }
+
+        /* Hiệu ứng xoay toàn bộ cảnh */
+        @keyframes rotateScene {
+            from { transform: rotateY(0deg) rotateX(10deg); }
+            to { transform: rotateY(360deg) rotateX(10deg); }
+        }
+
+        /* Trái tim ở giữa */
+        .heart {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: #ff2d75;
+            left: 75px;
+            top: 75px;
+            transform: rotate(-45deg);
+            box-shadow: 0 0 40px #ff2d75;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: #ff2d75;
+            border-radius: 50%;
+        }
+
+        .heart::before { top: -75px; left: 0; }
+        .heart::after { left: 75px; top: 0; }
+
+        .heart img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: rotate(45deg) scale(1.2);
+            z-index: 10;
+        }
+
+        /* Các vòng chữ xoay quanh */
+        .ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-style: preserve-3d;
+        }
+
+        .char {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ffeb3b;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px #ffeb3b;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="heart">
+        <img src="love.jpg" alt="Love">
+    </div>
+    <div id="ring-container"></div>
+</div>
+
+<script>
+    const text = "ANH YÊU EM NHIỀU THẾ THÔI... VƯỢT QUA NGỌN GIÓ VƯỢT QUA ĐẠI DƯƠNG... ";
+    const ringContainer = document.getElementById('ring-container');
+    const radius = 250; // Độ rộng của vòng chữ
+
+    // Tạo vòng chữ 1
+    function createRing(text, yOffset, speed) {
+        const ring = document.createElement('div');
+        ring.className = 'ring';
+        ring.style.animation = `rotateRing ${speed}s infinite linear`;
+        
+        for (let i = 0; i < text.length; i++) {
+            const span = document.createElement('span');
+            span.className = 'char';
+            span.innerText = text[i];
+            const angle = (i / text.length) * 360;
+            span.style.transform = `rotateY(${angle}deg) translateZ(${radius}px) translateY(${yOffset}px)`;
+            ring.appendChild(span);
+        }
+        ringContainer.appendChild(ring);
+    }
+
+    // Bạn có thể tạo nhiều vòng với độ cao (yOffset) khác nhau
+    createRing(text, 0, 10);
+    createRing("MÃI BÊN NHAU NHÉ 2001 ❤️ 2003 ", 60, 15);
+</script>
+
+</body>
+</html>
+
